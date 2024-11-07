@@ -6,8 +6,10 @@ function AddSuperPerson() {
   const [name, setName] = useState("");
   const [superpower, setSuperpower] = useState("");
   const addSuperPerson = useStore((state) => state.addSuperPerson);
+  const fetchRandomSuperPerson = useStore((state) => state.fetchRandomSuperPerson);
 
-  const handleClick = (e) => {
+  // Handles adding a manually entered super person
+  const handleManualAdd = (e) => {
     e.preventDefault();
     if (name && superpower) {
       addSuperPerson({ name, superpower });
@@ -16,8 +18,16 @@ function AddSuperPerson() {
     }
   };
 
+  // Handles fetching and adding a random super person
+  const handleFetchRandom = async () => {
+    const randomPerson = await fetchRandomSuperPerson();
+    if (randomPerson) {
+      addSuperPerson(randomPerson);
+    }
+  };
+
   return (
-    <form onSubmit={handleClick} className="space-y-4 p-6">
+    <form onSubmit={handleManualAdd} className="space-y-4 p-6">
       <div className="space-y-2">
         <label htmlFor="name" className="block text-sm font-medium">
           Name
@@ -44,12 +54,22 @@ function AddSuperPerson() {
           className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
       </div>
+
       <button
         type="submit"
         className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md flex items-center justify-center transition-all duration-200 hover:from-purple-600 hover:to-pink-600"
       >
         <Sparkles className="mr-2 h-4 w-4" />
         Add SuperPerson
+      </button>
+
+      <button
+        type="button"
+        onClick={handleFetchRandom}
+        className="w-full py-2 mt-4 bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-md flex items-center justify-center transition-all duration-200 hover:from-blue-600 hover:to-green-600"
+      >
+        <Sparkles className="mr-2 h-4 w-4" />
+        Fetch Random SuperPerson
       </button>
     </form>
   );

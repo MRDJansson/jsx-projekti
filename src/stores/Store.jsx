@@ -9,13 +9,19 @@ import { create } from 'zustand';
   }
 
 const useStore = create((set) => ({
-  superPeople: [
-    { name: "Taatus", superpower: "Autism" },
-    { name: "Tiitus", superpower: "Smell" }
-  ],
-  addSuperPerson: (person) => set((state) => ({
-    superPeople: [...state.superPeople, person],
-  })),
+  superPeople: [],
+
+  fetchSuperPeople: async () => {
+    const URL = "https://superpeople-api.netlify.app/.netlify/functions/get-superpeople"
+    let res = await fetch(URL)
+    let data = await res.json()
+
+    const superPeople = data.map((person) => ({
+      name: person.name,
+      superpower: person.superpower,
+    }))
+    set({superPeople})
+  }
 }));
 
 

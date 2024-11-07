@@ -3,6 +3,7 @@ import SuperPerson from "./SuperPerson";
 
 function SuperPeople() {
   const superPeople = useStore((state) => state.superPeople);
+  const fetchSuperPeople = useStore((state) => state.fetchSuperPeople)
 
   return (
     <div className="p-6 space-y-2">
