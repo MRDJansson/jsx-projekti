@@ -7,9 +7,8 @@ function AddSuperPerson() {
   const [superpower, setSuperpower] = useState("");
   const addSuperPerson = useStore((state) => state.addSuperPerson);
 
-  // Handler for adding a super person
   const handleClick = (e) => {
-    e.preventDefault(); // Prevents any default action
+    e.preventDefault();
     if (name && superpower) {
       addSuperPerson({ name, superpower });
       setName("");
@@ -46,11 +45,18 @@ function AddSuperPerson() {
         />
       </div>
       <button
-        onClick={handleClick} // Move the click handler here
+        onClick={handleClick}
         className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md flex items-center justify-center transition-all duration-200 hover:from-purple-600 hover:to-pink-600"
       >
         <Sparkles className="mr-2 h-4 w-4" />
         Add SuperPerson
+      </button>
+      <button
+        onClick={handleClick} // Move the click handler here
+        className="w-full py-2 bg-gradient-to-r from-yellow-500 to-green-500 text-white rounded-md flex items-center justify-center transition-all duration-200 hover:from-purple-600 hover:to-pink-600"
+      >
+        <Sparkles className="mr-2 h-4 w-4" />
+        Fetch Super People
       </button>
     </div>
   );
