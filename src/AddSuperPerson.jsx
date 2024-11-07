@@ -6,6 +6,7 @@ function AddSuperPerson() {
   const [name, setName] = useState("");
   const [superpower, setSuperpower] = useState("");
   const addSuperPerson = useStore((state) => state.addSuperPerson);
+  const { fetchSuperPeople } = useStore();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -13,6 +14,9 @@ function AddSuperPerson() {
       addSuperPerson({ name, superpower });
       setName("");
       setSuperpower("");
+    }
+    if (!name && !superpower){
+      fetchSuperPeople()
     }
   };
 
@@ -50,13 +54,6 @@ function AddSuperPerson() {
       >
         <Sparkles className="mr-2 h-4 w-4" />
         Add SuperPerson
-      </button>
-      <button
-        onClick={handleClick} // Move the click handler here
-        className="w-full py-2 bg-gradient-to-r from-yellow-500 to-green-500 text-white rounded-md flex items-center justify-center transition-all duration-200 hover:from-purple-600 hover:to-pink-600"
-      >
-        <Sparkles className="mr-2 h-4 w-4" />
-        Fetch Super People
       </button>
     </div>
   );

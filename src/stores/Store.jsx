@@ -1,23 +1,24 @@
-// store.js
 import { create } from 'zustand';
 
-  async function fetchData() {
-    const URL = "https://superpeople-api.netlify.app/.netlify/functions/get-superpeople"
-    let res = await fetch(URL)
-    let data = await res.json()
-    
-  }
-
 const useStore = create((set) => ({
-  superPeople: [
-    { name: "Taatus", superpower: "Autism" },
-    { name: "Tiitus", superpower: "Smell" }
-  ],
+  superPeople: [],
+
+  fetchSuperPeople: async () => {
+    const URL = "https://superpeople-api.netlify.app/.netlify/functions/get-superpeople";
+    try {
+      const res = await fetch(URL);
+      const data = await res.json();
+      const randomPerson = data[Math.floor(Math.random() * data.length)];
+      
+      set((state) => ({ superPeople: [...state.superPeople, randomPerson] }));
+    } catch (error) {
+      console.error("Failed to fetch superpeople:", error);
+    }
+  },
+
   addSuperPerson: (person) => set((state) => ({
-    superPeople: [...state.superPeople, person],
-  })),
+    superPeople: [...state.superPeople, person]
+  }))
 }));
-
-
 
 export default useStore;
