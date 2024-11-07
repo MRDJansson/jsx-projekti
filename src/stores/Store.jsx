@@ -18,7 +18,12 @@ const useStore = create((set) => ({
 
   addSuperPerson: (person) => set((state) => ({
     superPeople: [...state.superPeople, person]
-  }))
+  })),
+  
+  removeSuperPerson: (name) => set((state) => ({
+    superPeople: state.superPeople.filter(person => person.name !== name)
+  })),
+
 }));
 
 export default useStore;
